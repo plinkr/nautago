@@ -42,11 +42,11 @@ tiempo de ejecución. La salida de la CLI está en español, como en NautaPy.
 Cada [release de GitHub](https://github.com/plinkr/nautago/releases) incluye
 binarios precompilados:
 
-| SO      | Sufijo del archivo                                                  |
-|---------|---------------------------------------------------------------------|
-| Linux   | `linux_amd64`, `linux_386`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
-| Windows | `windows_amd64`, `windows_386`, `windows_arm64` (`.zip`)            |
-| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel)              |
+| SO      | Sufijo del archivo                                     |
+|---------|--------------------------------------------------------|
+| Linux   | `linux_amd64`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
+| Windows | `windows_amd64` (`.zip`)                               |
+| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel) |
 
 En una Raspberry Pi use `linux_arm64` con un SO de 64 bits, `linux_armv7` para
 Pi 2/3/4 con SO de 32 bits y `linux_armv6` para Pi Zero/1. Verifique las descargas

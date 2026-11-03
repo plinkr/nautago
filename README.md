@@ -38,11 +38,11 @@ binary with no runtime dependencies. The CLI output is in Spanish, as in NautaPy
 Every [GitHub release](https://github.com/plinkr/nautago/releases) ships
 prebuilt binaries:
 
-| OS      | Archive suffix                                                      |
-|---------|---------------------------------------------------------------------|
-| Linux   | `linux_amd64`, `linux_386`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
-| Windows | `windows_amd64`, `windows_386`, `windows_arm64` (`.zip`)            |
-| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel)              |
+| OS      | Archive suffix                                         |
+|---------|--------------------------------------------------------|
+| Linux   | `linux_amd64`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
+| Windows | `windows_amd64` (`.zip`)                               |
+| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel) |
 
 On a Raspberry Pi use `linux_arm64` with a 64-bit OS, `linux_armv7` for
 Pi 2/3/4 with a 32-bit OS and `linux_armv6` for Pi Zero/1. Verify downloads
