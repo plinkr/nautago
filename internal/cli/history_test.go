@@ -156,12 +156,26 @@ func TestListConnectionsCanBeFollowedByTheSummary(t *testing.T) {
 }
 
 func TestVersion(t *testing.T) {
+	saved := version
+	t.Cleanup(func() { version = saved })
+
+	version = "v0.9.0"
 	app := newTestApp(t)
 	if code := app.run("--version"); code != 0 {
 		t.Fatalf("--version exited %d", code)
 	}
-	if got := app.out.String(); got != "nauta v"+Version+"\n" {
+	if got := app.out.String(); got != "nauta v0.9.0\n" {
 		t.Errorf("--version printed %q", got)
+	}
+}
+
+func TestVersionWithoutLdflags(t *testing.T) {
+	saved := version
+	t.Cleanup(func() { version = saved })
+
+	version = ""
+	if got := buildVersion(); got == "" {
+		t.Error("buildVersion returned an empty version")
 	}
 }
 

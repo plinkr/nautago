@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 	"time"
 
 	"github.com/plinkr/nautago/internal/nauta"
@@ -18,7 +19,21 @@ import (
 	"github.com/plinkr/nautago/internal/storage"
 )
 
-const Version = "1.0.0"
+// version la fija el release con
+// -ldflags "-X github.com/plinkr/nautago/internal/cli.version=v0.9.0".
+var version string
+
+// buildVersion recurre, sin ldflags, a la versión del módulo que Go registra
+// en el binario: el tag del commit o, si no lo tiene, una pseudo-versión.
+func buildVersion() string {
+	if version != "" {
+		return version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" {
+		return info.Main.Version
+	}
+	return "(devel)"
+}
 
 const sessionFileName = "nauta-session"
 
@@ -125,7 +140,7 @@ func (a *App) run(ctx context.Context, argv []string) error {
 		return err
 	}
 	if showVersion {
-		fmt.Fprintf(a.Out, "nauta v%s\n", Version)
+		fmt.Fprintf(a.Out, "nauta %s\n", buildVersion())
 		return nil
 	}
 

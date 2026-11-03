@@ -39,6 +39,21 @@ tiempo de ejecución. La salida de la CLI está en español, como en NautaPy.
 
 ## Instalación
 
+Cada [release de GitHub](https://github.com/plinkr/nautago/releases) incluye
+binarios precompilados:
+
+| SO      | Sufijo del archivo                                                  |
+|---------|---------------------------------------------------------------------|
+| Linux   | `linux_amd64`, `linux_386`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
+| Windows | `windows_amd64`, `windows_386`, `windows_arm64` (`.zip`)            |
+| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel)              |
+
+En una Raspberry Pi use `linux_arm64` con un SO de 64 bits, `linux_armv7` para
+Pi 2/3/4 con SO de 32 bits y `linux_armv6` para Pi Zero/1. Verifique las descargas
+con `checksums.txt`, o con `gh attestation verify <archivo> -R plinkr/nautago`.
+
+Con Go:
+
 ```sh
 go install github.com/plinkr/nautago/cmd/nauta@latest
 ```
@@ -364,7 +379,22 @@ Dependencias:
 | `golang.org/x/term` | Leer contraseñas sin eco. |
 | `modernc.org/sqlite` | SQLite en Go puro, compatible con las bases de datos de NautaPy. |
 
-El driver de SQLite es la mayor parte del tamaño del binario (unos 18 MB).
+El driver de SQLite es la mayor parte del tamaño del binario: unos 18 MB con un
+`go build` normal y 12 MB en los binarios de release, que quitan los símbolos
+con `-s -w`.
+
+Subir un tag publica un release: `.github/workflows/release.yml` ejecuta las
+comprobaciones anteriores y después GoReleaser con `.goreleaser.yaml`. Los tags
+con sufijo, como `v0.9.0-rc.1`, se publican como pre-release.
+
+```sh
+git tag -a v0.9.0 -m "v0.9.0"
+git push origin v0.9.0
+```
+
+La versión sale solo del tag. `nauta --version` la toma de los ldflags del
+release o, con `go install` y `go build`, de la versión del módulo que Go
+registra en el binario.
 
 ## Estructura
 

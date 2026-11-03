@@ -35,6 +35,21 @@ binary with no runtime dependencies. The CLI output is in Spanish, as in NautaPy
 
 ## Installation
 
+Every [GitHub release](https://github.com/plinkr/nautago/releases) ships
+prebuilt binaries:
+
+| OS      | Archive suffix                                                      |
+|---------|---------------------------------------------------------------------|
+| Linux   | `linux_amd64`, `linux_386`, `linux_arm64`, `linux_armv7`, `linux_armv6` |
+| Windows | `windows_amd64`, `windows_386`, `windows_arm64` (`.zip`)            |
+| macOS   | `darwin_arm64` (Apple Silicon), `darwin_amd64` (Intel)              |
+
+On a Raspberry Pi use `linux_arm64` with a 64-bit OS, `linux_armv7` for
+Pi 2/3/4 with a 32-bit OS and `linux_armv6` for Pi Zero/1. Verify downloads
+against `checksums.txt`, or with `gh attestation verify <archive> -R plinkr/nautago`.
+
+With Go:
+
 ```sh
 go install github.com/plinkr/nautago/cmd/nauta@latest
 ```
@@ -348,7 +363,21 @@ Dependencies:
 | `golang.org/x/term` | Reading passwords without echo. |
 | `modernc.org/sqlite` | Pure-Go SQLite, compatible with NautaPy's database files. |
 
-The SQLite driver accounts for most of the binary size (about 18 MB).
+The SQLite driver accounts for most of the binary size: about 18 MB for a plain
+`go build` and 12 MB for release builds, which strip symbols with `-s -w`.
+
+Pushing a tag publishes a release: `.github/workflows/release.yml` runs the
+checks above and then GoReleaser with `.goreleaser.yaml`. Tags with a suffix,
+such as `v0.9.0-rc.1`, are published as pre-releases.
+
+```sh
+git tag -a v0.9.0 -m "v0.9.0"
+git push origin v0.9.0
+```
+
+The version comes from the tag only. `nauta --version` prints it from the
+release ldflags or, for `go install` and `go build`, from the module version Go
+stamps into the binary.
 
 ## Project layout
 
